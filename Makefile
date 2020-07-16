@@ -2,12 +2,12 @@
 .DEFAULT_GOAL := default_target
 
 PROJECT_NAME := spreadsheet-test
-PYTHON_VERSION := 3.6.6
+PYTHON_VERSION := 3.8.3
 VENV_NAME := $(PROJECT_NAME)-$(PYTHON_VERSION)
 
 setup-dev:
 	pip install pip --upgrade
-	pip install -U setuptools
+	pip install -U setuptools wheel
 	pip install -r requirements-dev.txt
 
 test:

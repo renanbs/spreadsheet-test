@@ -1,12 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(name='spreadsheet-test',
-      description='Spreadsheet Test',
-      long_description='Just a spreadsheet test',
+      description='Sheetgo Test',
+      long_description='Just a spreadsheet and image processing test',
       packages=find_packages(exclude=["*tests*"]),
       version='1.0.0',
       install_requires=[
-          'Flask==1.1.1'
+          'Flask==1.1.2',
+          'injector==0.16.0'
       ],
       extras_require={
           'dev': [
