@@ -15,4 +15,3 @@ class AppModule(Module):
     @provider
     def configuration(self) -> ApplicationConfig:
         return Config
-
