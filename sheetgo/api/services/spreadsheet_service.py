@@ -1,7 +1,7 @@
 from openpyxl import load_workbook
 
 
-class SpreadssheetException(Exception):
+class SpreadsheetException(Exception):
     pass
 
 
@@ -15,6 +15,6 @@ class SpreadsheetService:
         try:
             wb = load_workbook(filename=spreadsheet)
         except Exception:
-            raise SpreadssheetException('could not load workbook')
+            raise SpreadsheetException('could not load workbook')
 
         return sorted(wb.sheetnames)

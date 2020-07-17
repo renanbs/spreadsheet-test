@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, request
 
 from injector import inject
 
-from sheetgo.api.services.spreadsheet_service import SpreadsheetService, SpreadssheetException
+from sheetgo.api.services.spreadsheet_service import SpreadsheetService, SpreadsheetException
 from sheetgo.dependencies import Application
 
 
@@ -37,7 +37,7 @@ class SpreadsheetEndpoint:
 
             try:
                 tabs = self.spreadsheet_service.ordered_sheetnames(the_file)
-            except SpreadssheetException as ex:
+            except SpreadsheetException as ex:
                 return jsonify({'error': str(ex)}), HTTPStatus.BAD_REQUEST
 
             return jsonify({'tabs': tabs}), HTTPStatus.OK
