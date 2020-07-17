@@ -2,7 +2,7 @@ from injector import Module, singleton, provider
 
 from sheetgo.api.app_image import ImageEndpoint
 from sheetgo.api.app_spreadsheet import SpreadsheetEndpoint
-from sheetgo.api.services.SpreadsheetService import SpreadsheetService
+from sheetgo.api.services.spreadsheet_service import SpreadsheetService
 from sheetgo.default import Config
 from sheetgo.dependencies import ApplicationRegister, ApplicationConfig
 
