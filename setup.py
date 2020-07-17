@@ -8,7 +8,8 @@ setup(name='spreadsheet-test',
       install_requires=[
           'Flask==1.1.2',
           'injector==0.16.0',
-          'openpyxl==3.0.4'
+          'openpyxl==3.0.4',
+          'pillow=7.2.0'
       ],
       extras_require={
           'dev': [
