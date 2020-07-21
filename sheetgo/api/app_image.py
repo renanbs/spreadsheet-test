@@ -1,24 +1,37 @@
 from http import HTTPStatus
 
-
-from flask import Blueprint, jsonify
+from flask import Blueprint, request, Response
 
 from injector import inject
+from werkzeug.wsgi import FileWrapper
 
+from sheetgo.api.services.image_service import ImageService
+from sheetgo.api.utils import validate_zero_file_size
 from sheetgo.dependencies import Application
 
 
 class ImageEndpoint:
 
     @inject
-    def __init__(self, app: Application):
+    def __init__(self, app: Application, image_service: ImageService):
         self.app = app
+        self.image_service = image_service
 
     def register_endpoints(self):
         app_bp = Blueprint('ImageApp', __name__)
 
         @self.app.route('/image/convert', methods=['POST'])
         def convert_image():
-            return jsonify({'ok': 'ok'}), HTTPStatus.OK
+            if 'file' not in request.files:
+                return {'error': 'invalid file'}, HTTPStatus.BAD_REQUEST
+
+            the_file = request.files['file']
+            if the_file.filename == '' or not validate_zero_file_size(the_file):
+                return {'error': 'did you try to send a file?'}, HTTPStatus.BAD_REQUEST
+
+            my_image = self.image_service.convert_from_jpeg_to_png(the_file)
+            headers = {'Content-Disposition': 'attachment; filename="my_balls.png"'}
+            converted_image = FileWrapper(my_image)
+            return Response(converted_image, mimetype="image/png", direct_passthrough=True, headers=headers)
 
         return app_bp

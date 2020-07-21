@@ -5,15 +5,8 @@ from flask import Blueprint, jsonify, request
 from injector import inject
 
 from sheetgo.api.services.spreadsheet_service import SpreadsheetService, SpreadsheetException
+from sheetgo.api.utils import validate_zero_file_size
 from sheetgo.dependencies import Application
-
-
-def validate_file_size(stream):
-    chunk = stream.read(1)
-    stream.seek(0)
-    if not len(chunk):
-        return False
-    return True
 
 
 class SpreadsheetEndpoint:
@@ -32,7 +25,7 @@ class SpreadsheetEndpoint:
                 return {'error': 'invalid file'}, HTTPStatus.BAD_REQUEST
 
             the_file = request.files['file']
-            if the_file.filename == '' or not validate_file_size(the_file):
+            if the_file.filename == '' or not validate_zero_file_size(the_file):
                 return {'error': 'did you try to send a file?'}, HTTPStatus.BAD_REQUEST
 
             try:
