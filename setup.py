@@ -9,7 +9,7 @@ setup(name='spreadsheet-test',
           'Flask==1.1.2',
           'injector==0.16.0',
           'openpyxl==3.0.4',
-          'pillow=7.2.0'
+          'pillow==7.2.0'
       ],
       extras_require={
           'dev': [

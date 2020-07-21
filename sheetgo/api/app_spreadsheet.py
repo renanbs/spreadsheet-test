@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 from injector import inject
 
 from sheetgo.api.services.spreadsheet_service import SpreadsheetService, SpreadsheetException
-from sheetgo.api.utils import validate_zero_file_size
+from sheetgo.api.utils import validate_zero_file_size, split_filename
 from sheetgo.dependencies import Application
 
 
@@ -27,6 +27,10 @@ class SpreadsheetEndpoint:
             the_file = request.files['file']
             if the_file.filename == '' or not validate_zero_file_size(the_file):
                 return {'error': 'did you try to send a file?'}, HTTPStatus.BAD_REQUEST
+
+            filename, file_ext = split_filename(the_file.filename)
+            if file_ext != '.xlsx':
+                return {'error': 'unsupported file format'}, HTTPStatus.BAD_REQUEST
 
             try:
                 tabs = self.spreadsheet_service.ordered_sheetnames(the_file)
