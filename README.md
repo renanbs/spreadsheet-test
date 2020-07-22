@@ -5,11 +5,16 @@ This project consists in 2 API's. One of them returns the list of tabs of a exce
 
  - It was only tested on Linux.
 
+#### API Endpoints
+- POST /image/convert
+- POST /excel/info
+
 
 ## Requirements
 
  - Make
  - Python 3.8+
+ - pyenv
 
 
 ## Development Environment
@@ -89,8 +94,8 @@ The server is accessible at the link below, despite there is no root endpoint:
 > http://127.0.0.1:5000/
 
 The only available endpoints are:
-- http://127.0.0.1:5000/image/convert
-- http://127.0.0.1:5000/excel/info
+- POST http://127.0.0.1:5000/image/convert
+- POST http://127.0.0.1:5000/excel/info
 
 ---
 ## Usage examples
