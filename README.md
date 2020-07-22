@@ -85,8 +85,55 @@ or
 
 This will start the server in your localhost using port 5000.
 
-You can access it at
+The server is accessible at the link below, despite there is no root endpoint:
 > http://127.0.0.1:5000/
 
----
+The only available endpoints are:
+- http://127.0.0.1:5000/image/convert
+- http://127.0.0.1:5000/excel/info
 
+---
+## Usage examples
+
+### cURL
+
+Just change the email inside generate.py to generate another token
+
+Get tabs ordered alphabetical
+```bash
+➜ curl http://127.0.0.1:5000/excel/info -H "X-Authentication-Token: `python generate_jwt.py`" -F file=@Sample.xlsx
+```
+
+Convert jpg image to png
+```bash
+➜ curl http://127.0.0.1:5000/image/convert -H "X-Authentication-Token: `python generate_jwt.py`" -F file=@sample.jpg -F format=png --output ./jpg-to-png-sample.png                                      
+```
+
+Convert png image to jpg 
+```bash
+➜ curl http://127.0.0.1:5000/image/convert -H "X-Authentication-Token: `python generate_jwt.py`" -F file=@png-sample.png -F format=jpg --output ./png-to-jpg-sample.jpg
+```
+
+### Python Scripts
+
+- Get tabs ordered alphabetical
+
+The first parameter is the email to be authenticated and the second is the xlsx files to extract the tabs.
+```bash
+➜ python excel_info.py lucas@sheetgo.com sample.xlsx
+```
+
+- Convert image
+
+  The first parameter is the email to be authenticated, the second is the input file and the third is the output file
+
+    - jpg to png
+
+    ```bash
+    ➜ python convert_img.py lucas@sheetgo.com png jpg-sample.jpg jpg-to-png-sample.png                                  
+    ```
+
+    - png to jpg 
+    ```bash
+    ➜ python convert_img.py lucas@sheetgo.com jpg png-sample.png png-to-jpg-sample.jpg  
+    ```

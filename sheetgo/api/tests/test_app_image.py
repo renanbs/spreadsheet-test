@@ -59,6 +59,14 @@ def test_should_convert_image(api_client, simple_jpg, headers):
     assert response.content_type == 'image/png'
 
 
+def test_should_not_convert_image_without_format(api_client, simple_jpg, headers):
+    data = dict(file=(BytesIO(simple_jpg), 'tux.jpg'))
+
+    response = api_client.post('/image/convert', data=data, headers=headers)
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert response.json == {'error': 'a format is required'}
+
+
 def test_should_not_convert_image(injector, api_client, image_service, simple_jpg, headers):
     sp = injector.get(ImageService)
     sp.convert_image = MagicMock(

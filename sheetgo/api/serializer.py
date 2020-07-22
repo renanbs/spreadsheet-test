@@ -24,10 +24,11 @@ class FileSerializer:
         if remove_dot(file_ext) not in self.ext:
             raise FileSerializerException('unsupported file format')
 
-    def _validate_request_format(self):
+    def _has_format(self):
         if 'format' not in self.request_format:
             raise FileSerializerException('a format is required')
 
+    def _validate_request_format(self):
         if self.request_format['format'] not in self.ext:
             raise FileSerializerException('unsupported conversion format')
 
@@ -35,5 +36,7 @@ class FileSerializer:
         self._has_file_in_request()
         self._has_a_valid_file()
         self._is_filename_valid()
-        if self.request_format:
+
+        if self.request_format is not None:
+            self._has_format()
             self._validate_request_format()

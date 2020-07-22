@@ -21,7 +21,8 @@ def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         try:
-            auth = request.headers.get('authorization')[7:]
+            auth = request.headers.get('authorization') or request.headers.get('x-authentication-token')
+            auth = auth[7:]
             email = decode_token(auth, current_app.config.get('SECRET_KEY'))
         except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, KeyError, TypeError) as e:
             return build_message(HTTPStatus.UNAUTHORIZED, e)
