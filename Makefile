@@ -11,7 +11,7 @@ setup-dev:
 	pip install -r requirements-dev.txt
 
 test:
-	pytest -v --cov=sheetgo --cov-fail-under=84
+	pytest -v --cov=sheetgo --cov-fail-under=90
 
 test-coverage:
 	pytest -v --cov=spreadsheet_test --cov-report=term-missing --cov-report=html --cov-fail-under=84

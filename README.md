@@ -36,7 +36,11 @@ $ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 $ exec "$SHELL"
 ```
 
-After that, access the project directory and execute `make create-venv` to create and recreate the virtual environment.
+After that, access the project directory and execute `make create-venv` to create and recreate the virtual environment:
+
+```bash
+➜ make create-venv
+```
 
 > The environment will be create in your home directory:
 
@@ -51,21 +55,38 @@ $HOME/.pyenv/versions/$PROJECT_NAME-$PYTHON_VERSION/bin/python
 
 ### Run unit tests, style and convention
 
-- Tests will run with coverage minimum at 70%.
+- Tests will run with coverage minimum at 90%.
 
 Running code style
 ```bash
-make code-convention
+➜ make code-convention
 ```
 Running unit tests
 ```bash
-make test
+➜ make test
 ```
 Running code style and all tests
 ```bash
-make
+➜ make
 ```
 
-## How to use this project
+## How to run this project
 
-### TODO
+There are 2 ways to run this project.
+
+```bash
+➜ flask run
+```
+or
+
+```bash
+➜ python wsgi.py
+```
+
+This will start the server in your localhost using port 5000.
+
+You can access it at
+> http://127.0.0.1:5000/
+
+---
+
