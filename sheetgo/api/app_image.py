@@ -1,9 +1,10 @@
 from http import HTTPStatus
 
-from flask import Blueprint, request, Response, jsonify
+from flask import Blueprint, request, Response
 
 from injector import inject
 
+from sheetgo.api.auth import requires_auth
 from sheetgo.api.serializer import FileSerializer, FileSerializerException
 from sheetgo.api.services.image_service import ImageService, ImageServiceException
 from sheetgo.dependencies import Application
@@ -20,6 +21,7 @@ class ImageEndpoint:
         app_bp = Blueprint('ImageApp', __name__)
 
         @self.app.route('/image/convert', methods=['POST'])
+        @requires_auth
         def convert_image():
             try:
                 serializer = FileSerializer(request.files, ['jpeg', 'jpg', 'png'], request.form)
@@ -27,7 +29,7 @@ class ImageEndpoint:
 
                 converted_image = self.image_service.convert_image(request.files['file'], request.form['format'])
             except (ImageServiceException, FileSerializerException) as ex:
-                return jsonify({'error': str(ex)}), HTTPStatus.BAD_REQUEST
+                return {'error': str(ex)}, HTTPStatus.BAD_REQUEST
 
             filename = f'{request.files["file"]}.{request.form["format"]}'
             headers = {'Content-Disposition': f'attachment; filename="{filename}"'}

@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request
 
 from injector import inject
 
+from sheetgo.api.auth import requires_auth
 from sheetgo.api.serializer import FileSerializer, FileSerializerException
 from sheetgo.api.services.spreadsheet_service import SpreadsheetService, SpreadsheetServiceException
 from sheetgo.dependencies import Application
@@ -20,6 +21,7 @@ class SpreadsheetEndpoint:
         app_bp = Blueprint('SpreadsheetApp', __name__)
 
         @self.app.route('/excel/info', methods=['POST'])
+        @requires_auth
         def extract_tabs():
             try:
                 serializer = FileSerializer(request.files, ['xlsx'])
