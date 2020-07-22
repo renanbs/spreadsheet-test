@@ -60,3 +60,6 @@ clean: .clean-build .clean-pyc .clean-test ## remove all build, test, coverage a
 all : setup-dev test-coverage code-convention
 
 default_target: code-convention test
+
+run:
+	flask run

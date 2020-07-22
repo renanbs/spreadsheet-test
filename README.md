@@ -87,6 +87,11 @@ or
 ```bash
 ➜ python wsgi.py
 ```
+or 
+
+```bash
+➜ make run
+```
 
 This will start the server in your localhost using port 5000.
 
