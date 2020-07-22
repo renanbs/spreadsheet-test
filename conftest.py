@@ -8,7 +8,7 @@ from sheetgo.main_module import MODULES
 
 
 @pytest.fixture
-def injector(spreadsheet_service):
+def injector(spreadsheet_service, image_service):
     injector = Injector(MODULES)
     injector.binder.bind(SpreadsheetService, to=InstanceProvider(spreadsheet_service))
     injector.binder.bind(ImageService, to=InstanceProvider(image_service))

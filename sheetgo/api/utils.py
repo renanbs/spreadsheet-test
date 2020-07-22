@@ -23,3 +23,7 @@ def file_loader(filename, binary=False):
 
 def split_filename(filename):
     return os.path.splitext(filename)[0], os.path.splitext(filename)[1]
+
+
+def remove_dot(ext):
+    return ext[1: len(ext)]

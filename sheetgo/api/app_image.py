@@ -1,11 +1,11 @@
 from http import HTTPStatus
 
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, jsonify
 
 from injector import inject
 
-from sheetgo.api.services.image_service import ImageService
-from sheetgo.api.utils import validate_zero_file_size, split_filename
+from sheetgo.api.serializer import FileSerializer, FileSerializerException
+from sheetgo.api.services.image_service import ImageService, ImageServiceException
 from sheetgo.dependencies import Application
 
 
@@ -21,24 +21,16 @@ class ImageEndpoint:
 
         @self.app.route('/image/convert', methods=['POST'])
         def convert_image():
-            if 'file' not in request.files:
-                return {'error': 'invalid file'}, HTTPStatus.BAD_REQUEST
+            try:
+                serializer = FileSerializer(request.files, ['jpeg', 'jpg', 'png'], request.form)
+                serializer.is_valid()
 
-            the_file = request.files['file']
-            if the_file.filename == '' or not validate_zero_file_size(the_file):
-                return {'error': 'did you try to send a file?'}, HTTPStatus.BAD_REQUEST
+                converted_image = self.image_service.convert_image(request.files['file'], request.form['format'])
+            except (ImageServiceException, FileSerializerException) as ex:
+                return jsonify({'error': str(ex)}), HTTPStatus.BAD_REQUEST
 
-            filename, file_ext = split_filename(the_file.filename)
-            if file_ext not in ['.jpeg', '.jpg', '.png']:
-                return {'error': 'unsupported file format'}, HTTPStatus.BAD_REQUEST
-
-            file_format = request.form['format']
-            if file_format not in ['.jpeg', '.jpg', '.png']:
-                return {'error': 'unsupported conversion format'}, HTTPStatus.BAD_REQUEST
-
-            converted_image = self.image_service.convert_image(the_file, file_format)
-
-            headers = {'Content-Disposition': f'attachment; filename="{filename}.{file_format}"'}
+            filename = f'{request.files["file"]}.{request.form["format"]}'
+            headers = {'Content-Disposition': f'attachment; filename="{filename}"'}
             return Response(converted_image, mimetype="image/png", direct_passthrough=True, headers=headers)
 
         return app_bp
