@@ -30,7 +30,7 @@ This project uses `Makefile` as automation tool.
 
 The following commands will install and set-up `pyenv` tool (https://github.com/pyenv/pyenv) used to create/manage virtual environments:
 
-> Just replace `bashrc` with the configuration file of your interpreter, like `zshrc`
+> If you use `zsh`, just replace `bashrc` with the configuration file of your interpreter `zshrc`
 
 ```bash
 $ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
