@@ -10,7 +10,7 @@ setup(name='spreadsheet-test',
           'injector==0.16.0',
           'openpyxl==3.0.4',
           'pillow==7.2.0',
-          'pyjwt==1.7.1'
+          'pyjwt==2.4.0'
       ],
       extras_require={
           'dev': [
