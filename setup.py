@@ -6,7 +6,7 @@ setup(name='spreadsheet-test',
       packages=find_packages(exclude=["*tests*"]),
       version='1.0.0',
       install_requires=[
-          'Flask==1.1.2',
+          'Flask==2.3.2',
           'injector==0.16.0',
           'openpyxl==3.0.4',
           'pillow==7.2.0',
